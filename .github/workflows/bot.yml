@@ -1,15 +1,10 @@
 name: My First GitHub Action Bot
 
 on:
-  # ⏰ SCHEDULER: Runs automatically every 15 minutes!
   schedule:
     - cron: '*/15 * * * *'
-
-  # 🚀 PUSH: Runs whenever code is pushed to main
   push:
     branches: [ "main" ]
-
-  # 🖐️ MANUAL: Allows manual button click in GitHub UI
   workflow_dispatch:
 
 jobs:
@@ -25,5 +20,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: 3. Run the python script!
+      - name: 3. Run the python script with Secrets!
+        env:
+          # Pull the encrypted key securely from GitHub Secrets
+          MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}
         run: python ping.py
