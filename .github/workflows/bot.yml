@@ -1,27 +1,37 @@
-name: My First GitHub Action Bot
+name: Live Auto-Updating Website Bot
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '0 * * * *' # Runs automatically every hour!
   push:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: write # Gives the robot permission to commit files back to GitHub!
+
 jobs:
-  run-python-script:
+  auto-update-website:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 1. Download our code to the virtual computer
+      - name: 1. Checkout repository code
         uses: actions/checkout@v4
 
-      - name: 2. Setup Python environment
+      - name: 2. Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: 3. Run the python script with Secrets!
+      - name: 3. Install requests library
+        run: pip install requests
+
+      - name: 4. Run Python script to generate fresh website
         env:
-          # Pull the encrypted key securely from GitHub Secrets
           MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}
-        run: python ping.py
+        run: python daily_bot.py
+
+      - name: 5. Robot automatically commits & pushes new webpage to GitHub!
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🤖 Robot auto-updated index.html with live joke & timestamp!"
