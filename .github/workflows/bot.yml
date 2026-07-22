@@ -1,9 +1,16 @@
 name: My First GitHub Action Bot
 
 on:
+  # ⏰ SCHEDULER: Runs automatically every 15 minutes!
+  schedule:
+    - cron: '*/15 * * * *'
+
+  # 🚀 PUSH: Runs whenever code is pushed to main
   push:
     branches: [ "main" ]
-  workflow_dispatch: # This adds a manual "Run" button in the GitHub UI!
+
+  # 🖐️ MANUAL: Allows manual button click in GitHub UI
+  workflow_dispatch:
 
 jobs:
   run-python-script:
