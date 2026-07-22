@@ -1,0 +1,22 @@
+name: My First GitHub Action Bot
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # This adds a manual "Run" button in the GitHub UI!
+
+jobs:
+  run-python-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Download our code to the virtual computer
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Python environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 3. Run the python script!
+        run: python ping.py
