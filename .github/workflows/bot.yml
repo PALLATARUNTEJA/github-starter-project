@@ -2,7 +2,7 @@ name: Live Auto-Updating Website Bot
 
 on:
   schedule:
-    - cron: '0 * * * *' # Runs automatically every hour!
+    - cron: '0 */5 * * *' # Runs automatically every hour!
   push:
     branches: [ "main" ]
   workflow_dispatch:
